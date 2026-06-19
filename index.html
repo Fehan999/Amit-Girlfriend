@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For You ❤️</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      overflow-x: hidden;
+      background: radial-gradient(circle at top, #ff4d6d, #1a001f);
+    }
+
+    .heart {
+      position: absolute;
+      color: rgba(255,255,255,0.6);
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    .fade-in { animation: fadeIn 1.5s ease forwards; }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(15px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    .strike-anim {
+      position: relative;
+      display: inline-block;
+    }
+
+    .strike-anim::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 0%;
+      height: 2px;
+      background: #ff4d6d;
+      transition: width 1s ease;
+    }
+
+    .strike-anim.cut::after {
+      width: 100%;
+    }
+
+    .typewriter {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid #ffd700;
+      width: 0;
+      display: inline-block;
+      animation: typing 1s steps(10) forwards, blink 0.7s infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 80px; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+  </style>
+</head>
+
+<body class="text-white flex items-center justify-center min-h-screen relative">
+
+  <div id="hearts"></div>
+
+  <div class="text-center px-6 z-10">
+
+    <!-- BIG PHOTO -->
+    <div class="flex justify-center mb-6 fade-in">
+      <img src="https://i.ibb.co/placeholder.jpg"
+           class="w-64 h-64 rounded-2xl border-4 border-pink-300 shadow-2xl object-cover"
+           alt="Us Photo"/>
+    </div>
+
+    <!-- NAME (single line) -->
+    <h1 class="text-2xl sm:text-3xl font-bold fade-in whitespace-nowrap">
+      Naynita
+      <span class="mx-2 relative inline-block">
+
+        <!-- Das (animated) -->
+        <span id="dasText"
+              class="absolute -top-6 left-1/2 -translate-x-1/2 text-yellow-300 font-semibold opacity-0">
+          Das
+        </span>
+
+        <!-- Chowdhury -->
+        <span id="surname" class="strike-anim text-white">
+          Chowdhury
+        </span>
+      </span>
+    </h1>
+
+    <!-- Message -->
+    <p class="mt-6 text-lg text-pink-100 fade-in">
+      You are my favorite place in this world ❤️
+    </p>
+
+    <!-- Button -->
+    <button onclick="transformName()"
+      class="mt-6 px-6 py-2 bg-pink-500 rounded-full shadow-lg hover:bg-pink-600 transition">
+      Tap for Surprise 💌
+    </button>
+
+    <p id="loveMsg" class="mt-4 text-yellow-300 hidden fade-in">
+      I love you endlessly ❤️✨
+    </p>
+
+  </div>
+
+  <script>
+    // hearts
+    const heartsContainer = document.getElementById("hearts");
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.innerHTML = "❤";
+      heart.classList.add("heart");
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (Math.random() * 18 + 10) + "px";
+      heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+
+      heartsContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+
+    setInterval(createHeart, 250);
+
+    // animation on click
+    function transformName() {
+      const surname = document.getElementById("surname");
+      const das = document.getElementById("dasText");
+
+      // start strike animation
+      surname.classList.add("cut");
+
+      // show "Das" with typing feel
+      setTimeout(() => {
+        das.style.opacity = "1";
+        das.classList.add("typewriter");
+      }, 800);
+
+      // show message
+      setTimeout(() => {
+        document.getElementById("loveMsg").classList.remove("hidden");
+      }, 1600);
+    }
+  </script>
+
+</body>
+</html>
